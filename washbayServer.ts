@@ -18,7 +18,7 @@ var config = require('./server/config/config');
 **Initialising Utils, Libraries, MongoSuite
 */
 wbshared.init(config);
-
+var log = wbshared.logger.child({'module': __filename.substring(__dirname.length+1, __filename.length-3)});
 /*
 **core dependencies loading
 */

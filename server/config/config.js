@@ -16,7 +16,7 @@ module.exports = {
         },
         log: {
             level: 'debug',
-            path: __dirname + '/../../logs/washbay.logs'
+            path: __dirname + '/../../logs/washbay.log'
         },
     }
 };
