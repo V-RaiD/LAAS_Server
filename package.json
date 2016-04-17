@@ -28,6 +28,8 @@
    "co-redis": "^1.2.1",
    "co-request": "~0",
 
+   "wb-shared" : "file:wb-shared",
+
    "koa": "~0",
    "koa-better-body": "latest",
    "koa-compose": "2.3.0",

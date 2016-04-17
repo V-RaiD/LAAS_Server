@@ -35,7 +35,7 @@ var app = module.exports = koa();
 **middleware config variables
 */
 var koaConfig = require('./server/config/koa');
-
+  //log.debug('Koa Initialised', koaConfig);
 /*
 **configuring koa middleware
 */
@@ -46,6 +46,7 @@ koaConfig(app);
 */
 
 if(!module.parent){
+  log.debug('Listening on 3000');
   app.listen(3000);
 }
 else{

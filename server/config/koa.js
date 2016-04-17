@@ -1,7 +1,6 @@
 'use strict';
 const fs = require('fs');
-let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) });
-parse = require('koa-better-body');
+let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), parse = require('koa-better-body'), config = require('./config.js');
 module.exports = function (app) {
     app.use(cors({
         maxAge: 3600,
@@ -9,18 +8,19 @@ module.exports = function (app) {
         headers: 'Access-Control-Allow-Origin, Access-Control-Expose-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization',
         methods: 'GET, HEAD, OPTIONS, PUT, POST, DELETE'
     }));
-    app.use(function () {
+    app.use(function* (next) {
         this.req.connection.setTimeout(0);
         this.req.connection.setNoDelay(true);
+        yield next;
     });
     app.use(compress());
     let pubRouter = router();
     let secRouter = router();
     let adminRouter = router();
-    fs.readdirSync('./server/controllers').forEach(function (file) {
+    fs.readdirSync('./server/controller').forEach(function (file) {
         if (!file.endsWith('.js'))
             return;
-        let controller = require('../controllers/' + file);
+        let controller = require('../controller/' + file);
         if (controller.initAdmin)
             controller.initAdmin(adminRouter);
         if (controller.initPub)
@@ -52,6 +52,5 @@ module.exports = function (app) {
         if (pubRouter.match(this.path, this.method).pathAndMethod.length) {
             return;
         }
-        yield next;
     });
 };

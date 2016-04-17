@@ -2,10 +2,10 @@
 'use strict';
 const fs = require('fs');
 let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'),
-    wbshared = require('wb-shared'), logger = wbshared.logger.child({'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }}),
+    wbshared = require('wb-shared'), logger = wbshared.logger.child({'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }),
     /** child logger concept says that we can create a sub logger for a specific module adding functionality for that
         specific module like adding koa as the module name in each of the logger feeds*/
-    parse = require('koa-better-body');
+    parse = require('koa-better-body'), config = require('./config.js');
 
 module.exports = function (app){
   app.use(
@@ -20,11 +20,12 @@ module.exports = function (app){
   );
 
   app.use(
-    function (){
+    function *(next){
       this.req.connection.setTimeout(0);  //removes the default timeout of connection i.e. 2 minutes
       this.req.connection.setNoDelay(true); /**will set delay to false and data would be fired
-                                               immediately after calling socket.write
+                                          immediately after calling socket.write
                                             */
+      yield next;
     }
   );
 
@@ -41,10 +42,10 @@ module.exports = function (app){
   let secRouter = router();
   let adminRouter = router();
 
-  fs.readdirSync('./server/controllers').forEach(function (file) {
+  fs.readdirSync('./server/controller').forEach(function (file) {
       if (!file.endsWith('.js'))
           return;
-      let controller = require('../controllers/' + file);
+      let controller = require('../controller/' + file);
       if (controller.initAdmin)
           controller.initAdmin(adminRouter); //Each controller gets now instantiated by passing the router function
       if (controller.initPub)                //the router function @stacks a key value (see Layer.js for exact details of arrays) pair
@@ -88,9 +89,9 @@ module.exports = function (app){
       if(pubRouter.match(this.path, this.method).pathAndMethod.length){
         return; /**  if the route matches then th function gets executed and response returns */
       }
-      yield next;
+      //yield next;
     }
   );
 
-  
+
 }

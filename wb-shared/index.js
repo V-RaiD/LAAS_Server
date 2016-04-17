@@ -5,16 +5,18 @@ const logmaker = require('./utils/logger');
 let inited = false;
 
 exports.init = (config) => {
-  if(!inited)
+  if(inited)
     return;
+  inited = true;
   exports.config = config;
   exports.initLogger(config);
+  /*
   exports.initUtils();
   exports.initLib();
-  exports.initModel();
+  exports.initModel();*/
 };
 
-exports.initLogger(config){
+exports.initLogger = (config) => {
   logmaker.init(config);
   exports.logger = logmaker.root;
-}
+};

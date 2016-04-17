@@ -1,6 +1,7 @@
 'use strict';
 var bunyan = require('bunyan');
-module.exports = logger = function (config) {
+var logger = module.exports = {};
+logger.init = (config) => {
     logger.root = bunyan.createLogger({
         name: 'root',
         serializers: {

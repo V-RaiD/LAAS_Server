@@ -2,7 +2,8 @@
 
 var bunyan = require('bunyan');
 
-module.exports = logger = function(config){
+var logger = module.exports = {};
+logger.init = (config) => { /**  init method to initiate the creation of logger */
   logger.root = bunyan.createLogger(
     {
       name : 'root',

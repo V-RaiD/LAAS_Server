@@ -9,6 +9,7 @@ var app = module.exports = koa();
 var koaConfig = require('./server/config/koa');
 koaConfig(app);
 if (!module.parent) {
+    log.debug('Listening on 3000');
     app.listen(3000);
 }
 else {
