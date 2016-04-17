@@ -1,7 +1,8 @@
 'use strict'
-let mongoose = require('mongoose'), Schema = mongoose.Schema, Constants = require('../utils/constants.js');
+import mongoose = require('mongoose');
+let Schema = mongoose.Schema, Constants = require('../utils/constants.js');
 
-UserSchema = new Schema(
+var UserSchema = new Schema(
   {
     name : {
       fname : {
@@ -39,8 +40,35 @@ UserSchema = new Schema(
       enum : Constants.UTYPE
     },
     address : {
-      type : String
+      addressCurr : {
+        type : String
+      },
+      addressFinal : {
+        type : String
+      }
     },
-    
+    created : {
+      type : Date,
+      default : Date.now
+    },
+    modified : {
+      type : Date,
+      default : Date.now
+    }
+  },
+  {
+    toJSON : {
+      tranform : function (docM, retJ, option){ //docM : mongoose object(BSON), retJ : JSON object
+        delete retJ.__v;
+
+        retJ.created = new Date(retJ.created).getTime();
+        retJ.modified = new Date(retJ.modified).getTime();
+
+        return retJ;
+      }
+    }
   }
 );
+
+mongoose.static("defUserSchema", function ());
+mongoose.model('User', UserSchema);

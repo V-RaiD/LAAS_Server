@@ -34,7 +34,7 @@ var app = module.exports = koa();
 /*
 **middleware config variables
 */
-var koaConfig = require('./server/config/koaconfig');
+var koaConfig = require('./server/config/koa');
 
 /*
 **configuring koa middleware

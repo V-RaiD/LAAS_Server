@@ -6,7 +6,7 @@ var log = wbshared.logger.child({ 'module': __filename.substring(__dirname.lengt
 var co = require('co');
 var koa = require('koa');
 var app = module.exports = koa();
-var koaConfig = require('./server/config/koaconfig');
+var koaConfig = require('./server/config/koa');
 koaConfig(app);
 if (!module.parent) {
     app.listen(3000);

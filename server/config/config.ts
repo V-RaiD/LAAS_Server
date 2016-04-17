@@ -6,7 +6,8 @@ module.exports = {
   appConfig : {
     app : {
       name : 'WashBay.in',
-      version : '0.01'
+      version : '0.01',
+      uploads : __dirname + '/../../uploads'
     }
   },
 
@@ -20,6 +21,6 @@ module.exports = {
     log : {
       level : 'debug',
       path : __dirname + '/../../logs/washbay.log'
-    },
+    }
   }
 }
