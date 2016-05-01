@@ -10,7 +10,18 @@ exports.init = (config) => {
   inited = true;
   exports.config = config;
   exports.initLogger(config);
+  exports.initUtils();
   exports.initModels();
+};
+
+exports.initUtils = () => {
+  exports.utils = {};
+  var utilsPath = __dirname + '/models';
+  fs.readdirSync(utilsPath).forEach(function (file){
+    if(file.indexOf('js')){
+      exports.utils[file.substring(0, file.length - 3)] = require(utilsPath + '/' + file);
+    }
+  });
 };
 
 exports.initLogger = (config) => {
@@ -37,8 +48,27 @@ exports.initModels = () => {
   });
 }
 
-exports.initDatabase(){
+exports.initDatabase = function * () {
   var database = exports.database = {mongoose : null};
-
-  
+  var config = exports.config;
+  var connectUrl = `mongodb://${config.systemConfig.mongo.host}:${config.systemConfig.mongo.port}/${config.systemConfig.mongo.dbname}`;
+  var promise = new Promise(
+    function(resolve, reject){
+      mongoose.connection.on('disconnected',
+        function(error){
+          logmaker.root.error('Connection to mongodb failed');
+          reject(error);
+        }
+      );
+      mongoose.connection.on('connected',
+        function(){
+          logmaker.root.info('Connection to mongodb successfull');
+          database.mongoose = mongoose;
+          resolve(true);
+        }
+      );
+    }
+  );
+  mongoose.connect(connectUrl);
+  yield promise;
 }

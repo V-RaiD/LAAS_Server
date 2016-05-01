@@ -12,7 +12,8 @@ koaConfig(app);
 log.info('Testing startup');
 var promiseServer = new Promise(function (resolve, reject) {
     log.info('Setting up Mongo DB');
-    {
+    if (!wbshared.database) {
+        co(wbshared.initDatabase()).then();
     }
     log.info('Starting washbay server . . . ');
     if (!module.parent) {

@@ -48,9 +48,9 @@ log.info('Testing startup')
 var promiseServer = new Promise(function (resolve, reject){
   log.info('Setting up Mongo DB');
 
-  //if(!wbshared.database)
+  if(!wbshared.database)
   {
-  //  yield wbshared.initDatabase();
+    co(wbshared.initDatabase()).then();
   }
 
   log.info('Starting washbay server . . . ');

@@ -1,6 +1,6 @@
 'use strict'
-import mongoose = require('mongoose');
-let Schema = mongoose.Schema, log = require('../utils/logger').root.child({'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }); bcrypt = (..).utils.crypter, co = require('co'),Constants = require('../utils/constants.js');
+const mongoose = require('mongoose');
+let Schema = mongoose.Schema, log = require('../utils/logger').root.child({'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), bcrypt = require('..').utils.crypter, co = require('co'),Constants = require('../utils/constants.js');
 
 var UserSchema = new Schema(
   {
@@ -113,7 +113,7 @@ UserSchema.static("passwordChecker", function * (uId, password){
   }
 });
 
-mongoose.pre('save', function(done){//done ~ next
+UserSchema.pre('save', function(done){//done ~ next
   let user = this;//isModified is mongoose function to check wether the document have been edited or not
       //this refers to the document currently in process for updation, isModified @argument : <path>
   if (!user.isModified('password')) {
