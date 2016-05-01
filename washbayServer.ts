@@ -28,7 +28,7 @@ var koa = require('koa');
 /*
 **export variables
 */
-
+log.info('Initiating koa config');
 var app = module.exports = koa();
 
 /*
@@ -44,11 +44,31 @@ koaConfig(app);
 /*
 **server start/stop
 */
+log.info('Testing startup')
+var promiseServer = new Promise(function (resolve, reject){
+  log.info('Setting up Mongo DB');
 
-if(!module.parent){
-  log.debug('Listening on 3000');
-  app.listen(3000);
-}
-else{
-  process.exit(1);
-}
+  //if(!wbshared.database)
+  {
+  //  yield wbshared.initDatabase();
+  }
+
+  log.info('Starting washbay server . . . ');
+  if(!module.parent){
+    app.server = app.listen(config.systemConfig.app.port);
+    resolve(true);
+  }
+  else{
+    reject(new Error("error in starting"));
+  }
+});
+ log.info('Tester post promisifing');
+promiseServer.then(
+  function () {
+    log.info('Washbay server is running on port : ', config.systemConfig.app.port);
+  }
+).catch(
+  function (error) {
+    log.error('Washbay server interrupted : ', error);
+  }
+);

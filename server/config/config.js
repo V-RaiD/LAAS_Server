@@ -9,11 +9,15 @@ module.exports = {
         }
     },
     systemConfig: {
+        app: {
+            port: '9135'
+        },
         mongo: {
             debug: true,
             seed: false,
             host: '127.0.0.1',
-            port: '27017'
+            port: '27017',
+            dbname: 'washbay-dev'
         },
         log: {
             level: 'debug',
