@@ -4,7 +4,22 @@ let co = require('co'), wbshared = require('wb-shared'), log = wbshared.logger.c
 
 exports.initPub = function (app) {
   app.get('/verification/hello', printWashbay);
+  app.post('/verification/signup', signUp);
 };
+
+function * signUp(next){
+  try{
+    let body = this.request.fields;
+
+    
+    this.status = 200;
+  }
+  catch(error){
+    log.error('Exception caught in signUp : ', error);
+    this.body = "Error in processing SignUp Request";
+    this.status = 404;
+  }
+}
 
 function * printWashbay(next){
   try{

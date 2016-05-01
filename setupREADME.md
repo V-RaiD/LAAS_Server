@@ -35,3 +35,13 @@ sudo npm upgrade -g npm
 * [tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04)
 ```
 ```
+
+###Washbay Server as background process
+* Using nohup
+```
+nohup node washbayserver.js >/dev/null 2>&1 & # '/dev/null' acts as a sink or a black hole for all the screen outputs
+```
+* Using init script (as a service)
+```
+
+```
