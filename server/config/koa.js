@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('fs');
-let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), parse = require('koa-better-body'), config = require('./config.js');
+const mongoose = require('mongoose');
+let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), parse = require('koa-better-body'), config = wbshared.config, koajwt = require('koa-jwt'), User = mongoose.model('User');
 module.exports = function (app) {
     app.use(cors({
         maxAge: 3600,
@@ -48,8 +49,27 @@ module.exports = function (app) {
         }
     });
     app.use(pubRouter.routes());
-    app.use(function* next() {
+    app.use(function* (next) {
         if (pubRouter.match(this.path, this.method).pathAndMethod.length) {
+            return;
+        }
+        yield next;
+    });
+    app.use(koajwt({ secret: config.systemConfig.app.privateKey, key: "wbuser" }));
+    app.use(function* (next) {
+        let wbuser = yield User.findById(this.state.wbuser._id).exec();
+        this.document = {};
+        this.document.wbuser = wbuser;
+        yield next;
+    });
+    app.use(function* (next) {
+        logger.debug({ request: this.request, body: this.request.body });
+        yield next;
+        logger.debug({ response: this.response, body: this.response.body });
+    });
+    app.use(secRouter.routes());
+    app.use(function* (next) {
+        if (secRouter.match(this.path, this.method).pathAndMethod.length) {
             return;
         }
     });

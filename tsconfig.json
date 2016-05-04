@@ -1,13 +1,13 @@
 {
-	"compilerOptions":{
-		"target": "ES6",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true
-	},
-	"exclude" : [
-		"**/node_modules",
-		"jspm_packages"
-	]
+  },
+  "exclude": [
+    "**/node_modules",
+    "jspm_packages"
+  ]
 }

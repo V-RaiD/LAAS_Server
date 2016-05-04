@@ -1,54 +1,54 @@
 {
- "name": "washbay.in",
- "version": "0.0.1",
- "private": "true",
- "description": "server for LAAS Application named washbay.in",
- "homepage": "http://www.washbay.in",
- "bugs": {
-   "url": "https://github.com/V-RaiD/LAAS_Server"
- },
- "repository": {
-   "type": "git",
-   "url": "https://github.com/V-RaiD/LAAS_Server"
- },
- "engines": {
-   "node": ">=4.0.0"
- },
- "author": {
-   "name": "Amitesh Rai",
-   "url": "https://github.com/V-RaiD"
- },
- "scripts": {
+  "name": "washbay.in",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "server for LAAS Application named washbay.in",
+  "homepage": "http://www.washbay.in",
+  "bugs": {
+    "url": "https://github.com/V-RaiD/LAAS_Server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/V-RaiD/LAAS_Server"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "author": {
+    "name": "Amitesh Rai",
+    "url": "https://github.com/V-RaiD"
+  },
+  "scripts": {
 
- },
- "dependencies": {
-   "bunyan": "~1",
-   "co": "~4",
-   "co-fs": "latest",
-   "co-redis": "^1.2.1",
-   "co-request": "~0",
+  },
+  "dependencies": {
+    "bunyan": "~1",
+    "co": "~4",
+    "co-fs": "latest",
+    "co-redis": "^1.2.1",
+    "co-request": "~0",
 
-   "wb-shared" : "file:wb-shared",
+    "wb-shared": "file:wb-shared",
 
-   "koa": "~0",
-   "koa-better-body": "latest",
-   "koa-compose": "2.3.0",
-   "koa-compress": "latest",
-   "koa-cors": "0.0.16",
-   "koa-generic-session": "latest",
-   "koa-jwt": "latest",
-   "koa-logger": "~1",
-   "koa-passport": "latest",
-   "koa-response-time": "latest",
-   "koa-router": "5.2.3",
-   "koa-send": "~1",
-   "koa-session-mongoose": "latest",
+    "koa": "~0",
+    "koa-better-body": "latest",
+    "koa-compose": "2.3.0",
+    "koa-compress": "latest",
+    "koa-cors": "0.0.16",
+    "koa-generic-session": "latest",
+    "koa-jwt": "latest",
+    "koa-logger": "~1",
+    "koa-passport": "latest",
+    "koa-response-time": "latest",
+    "koa-router": "5.2.3",
+    "koa-send": "~1",
+    "koa-session-mongoose": "latest",
 
-   "lodash": "~3",
+    "lodash": "~3",
 
-   "mongodb": "latest",
-   "mongoose": "latest",
+    "mongodb": "latest",
+    "mongoose": "latest",
 
-   "image-size" : "latest"
- }
+    "image-size": "latest"
+  }
 }

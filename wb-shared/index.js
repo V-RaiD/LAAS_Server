@@ -16,9 +16,9 @@ exports.init = (config) => {
 
 exports.initUtils = () => {
   exports.utils = {};
-  var utilsPath = __dirname + '/models';
+  var utilsPath = __dirname + '/utils';
   fs.readdirSync(utilsPath).forEach(function (file){
-    if(file.indexOf('js')){
+    if(file.indexOf('js') > 1){
       exports.utils[file.substring(0, file.length - 3)] = require(utilsPath + '/' + file);
     }
   });
@@ -42,7 +42,8 @@ exports.initModels = () => {
   exports.models = {};
   var modelPath = __dirname + '/models';
   fs.readdirSync(modelPath).forEach(function (file){
-    if(file.indexOf('js')){
+    if(file.indexOf('js') > 1){
+      logmaker.root.info('File path : ', file);
       exports.models[file.substring(0, file.length - 3)] = require(modelPath + '/' + file);
     }
   });

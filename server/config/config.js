@@ -10,7 +10,9 @@ module.exports = {
     },
     systemConfig: {
         app: {
-            port: '9135'
+            port: '9135',
+            pubKey: __dirname + '/../../keys/washbay.pub',
+            privateKey: __dirname + '/../../keys/washbay'
         },
         mongo: {
             debug: true,
