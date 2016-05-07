@@ -8,10 +8,10 @@ let co = require('co'),
   config = wbshared.config,
   koajwt = require('koa-jwt');
 
-exports.initPub = function(app) {
-  app.get('/verification/hello', printWashbay);
-  app.post('/verification/signup', signUp);
-  app.post('/verification/signin', signin);
+exports.initPub = function(app) {//w1 - washbay 1.0
+  app.get('/w1/verification/hello', printWashbay);
+  app.post('/w1/verification/signup', signUp);
+  app.post('/w1/verification/signin', signin);
 };
 
 exports.initSecured = function(app) {

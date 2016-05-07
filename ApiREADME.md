@@ -8,7 +8,7 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/verification/signup' -X POST -d '{"name":{"fname":"Amitesh ","lname":"Rai"}, "password":"washbay@123","email":"amitesh.rai@washbay.in","phone":"0000000000","utype":null}' -H 'Content-Type:application/json'
+    curl -i 'http://localhost:9135/w1/verification/signup' -X POST -d '{"name":{"fname":"Amitesh ","lname":"Rai"}, "password":"washbay@123","email":"amitesh.rai@washbay.in","phone":"0000000000","utype":null}' -H 'Content-Type:application/json'
   * Data structure (required)
     {
       'name' : {'fname':'<first-name>'},
@@ -25,7 +25,7 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/verification/signin' -X POST -d '{"username":"<email/phone>","password":"<password>"}' -H 'Content-Type:application/json'
+    curl -i 'http://localhost:9135/w1/verification/signin' -X POST -d '{"username":"<email/phone>","password":"<password>"}' -H 'Content-Type:application/json'
   * Data Structure (required)
     {
       'username' : '<email/phone>',

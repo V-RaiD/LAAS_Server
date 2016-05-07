@@ -2,9 +2,9 @@
 const mongoose = require('mongoose');
 let co = require('co'), wbshared = require('wb-shared'), log = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), User = mongoose.model('User'), constants = wbshared.utils.constants, config = wbshared.config, koajwt = require('koa-jwt');
 exports.initPub = function (app) {
-    app.get('/verification/hello', printWashbay);
-    app.post('/verification/signup', signUp);
-    app.post('/verification/signin', signin);
+    app.get('/w1/verification/hello', printWashbay);
+    app.post('/w1/verification/signup', signUp);
+    app.post('/w1/verification/signin', signin);
 };
 exports.initSecured = function (app) {
     app.get('/verification/hellos', printWashbayS);

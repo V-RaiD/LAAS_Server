@@ -19,3 +19,13 @@ const ADMIN = 'admin';
 exports.MEMBER = MEMBER;
 exports.ADMIN = ADMIN;
 exports.MEMTYPE = [MEMBER, ADMIN];
+
+const CTMALE = 0;   //Cloth Type Male
+const CTFEMALE = 1; //Cloth Type FEMALE
+const CTKIDB = 2;   //Cloth Type Kid Boy
+const CTKIDG = 3;   //Cloth Type Kid Girl
+exports.CTMALE = CTMALE;
+exports.CTFEMALE = CTFEMALE;
+exports.CTKIDB = CTKIDB;
+exports.CTKIDG = CTKIDG;
+exports.CLOTHTYPE = [CTMALE, CTFEMALE, CTKIDB, CTKIDG];
