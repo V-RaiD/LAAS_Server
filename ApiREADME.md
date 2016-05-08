@@ -35,6 +35,8 @@
     Success message and Auth Token
   ```
 
+### Item Module
+
 * Query Item
 
   ```
