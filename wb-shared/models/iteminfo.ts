@@ -12,7 +12,7 @@ var ItemSchema = new Schema(
       type: Number,
       enum: Constants.CLOTHTYPE
     },
-    cost: {
+    wcost: {//wash
       classic: {
         type: Number,
         default: 5
@@ -26,6 +26,14 @@ var ItemSchema = new Schema(
         default: 15
       }
     },
+    icost: {//iron
+      type: Number,
+      default: 3
+    },
+    dcost: {//dryclean
+      type: Number,
+      default: 20
+    },
     created: {
       type: Date,
       default: Date.now
@@ -37,7 +45,7 @@ var ItemSchema = new Schema(
   },
   {
     toJSON: {
-      tranform: function(docM, retJ, option) { //docM : mongoose object(BSON), retJ : JSON object
+      transform: function(docM, retJ, option) { //docM : mongoose object(BSON), retJ : JSON object
         delete retJ.__v;
         if (retJ.created)
           retJ.created = new Date(retJ.created).getTime();
@@ -50,4 +58,15 @@ var ItemSchema = new Schema(
   }
 );
 
+ItemSchema.static('defItemSchema', function() {
+  return {
+    iName: null,
+    clothType: null,
+    cost: {
+      classic: null,
+      super: null,
+      ultra: null
+    }
+  };
+});
 mongoose.model('Item', ItemSchema);

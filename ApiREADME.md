@@ -34,3 +34,84 @@
   * Output
     Success message and Auth Token
   ```
+
+* Query Item
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/itemquery?lquery=<string>' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    [{"_id" : "<id>"","iName":"<name>"}]
+  ```
+
+* Add Item
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/item' -X POST -H 'Content-Type:application/json' -d '{"iName":"<name>","clothType":<0/1/2/3>,"wcost":{"classic":<val>,"super":<val>,"ultra":<val>},"icost":<val>,"dcost":<val>}' -H 'Authorization: bearer <authToken>'
+  * Data Structure (required)
+    {
+      "iName" : "<name>",
+      "clothType" : <0/1/2/3>,
+      "wcost" : {
+        "classic" : <val>,
+        "super" : <val>,
+        "ultra" : <val>
+      },
+      "icost" : <val>,
+      "dcost" : <val>
+    }
+  * Output
+    {<itemModel with _id>}
+  ```
+
+* Delete Item
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/item/<id>' -X DELETE -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {<deleted item>}
+  ```
+
+* Update Item
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/item/<id>' -X PUT -H 'Content-Type:application/json' -d '{"_id":"<id>", <dataToBeUpdated>}' -H 'Authorization: bearer <authToken>'
+  * Data Structure
+    {
+      "_id" : "<id>",
+      "<key>" : "<updated value>"
+    }
+  * Output
+    {<updated Item>}
+  ```
+
+* Get Item
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/item/<id>' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {<item>}
+  ```
+
+* Get Item List
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/itemlist/<type>' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+    <type> :
+    all : 4
+    men : 0
+    women : 1
+    kid boy : 2
+    kid girl : 3
+  * Output
+    [{<item>}]
+  ```

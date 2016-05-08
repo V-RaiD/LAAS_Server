@@ -59,7 +59,7 @@ var UserSchema = new Schema(
   },
   {
     toJSON: {
-      tranform: function(docM, retJ, option) { //docM : mongoose object(BSON), retJ : JSON object
+      transform: function(docM, retJ, option) { //docM : mongoose object(BSON), retJ : JSON object
         delete retJ.__v;
         if (retJ.created)
           retJ.created = new Date(retJ.created).getTime();

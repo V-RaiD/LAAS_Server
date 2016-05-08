@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const mongoose = require('mongoose');
-let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), parse = require('koa-better-body'), config = wbshared.config, koajwt = require('koa-jwt'), User = mongoose.model('User');
+let cors = require('koa-cors'), compress = require('koa-compress'), router = require('koa-router'), wbshared = require('wb-shared'), logger = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), parse = require('koa-better-body'), config = wbshared.config, koajwt = require('koa-jwt'), User = mongoose.model('User'), constants = wbshared.utils.constants;
 module.exports = function (app) {
     app.use(cors({
         maxAge: 3600,
@@ -70,6 +70,21 @@ module.exports = function (app) {
     app.use(secRouter.routes());
     app.use(function* (next) {
         if (secRouter.match(this.path, this.method).pathAndMethod.length) {
+            return;
+        }
+        yield next;
+    });
+    app.use(function* (next) {
+        if (this.document.wbuser.utype == constants.AUSER) {
+            yield next;
+        }
+        else {
+            return;
+        }
+    });
+    app.use(adminRouter.routes());
+    app.use(function* (next) {
+        if (adminRouter.match(this.path, this.method).pathAndMethod.length) {
             return;
         }
     });

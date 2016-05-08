@@ -23,6 +23,7 @@ function* signin(next) {
             this.body = "SignIn Successfull";
             this.status = 200;
         }
+        yield next;
     }
     catch (error) {
         log.error('Exception caught in signIn : ', error);
@@ -41,11 +42,12 @@ function* signUp(next) {
             signUpBody.gender = signUpBody.gender.toUpperCase();
         }
         signUpBody.utype = constants.EUSER;
-        let userSave = yield User(signUpBody).save();
+        let userSave = yield new User(signUpBody).save();
         this.response.set('Access-Control-Expose-Headers', 'authorization');
         this.response.set('authorization', koajwt.sign({ _id: userSave._id }, config.systemConfig.app.privateKey));
         this.body = "SignUp Successfull";
         this.status = 200;
+        yield next;
     }
     catch (error) {
         log.error('Exception caught in signUp : ', error);

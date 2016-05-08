@@ -14,12 +14,6 @@ exports.PDUSER = PDUSER;
 exports.AUSER = AUSER;
 exports.UTYPE = [EUSER, SUSER, PDUSER, AUSER];
 
-const MEMBER = 'member';
-const ADMIN = 'admin';
-exports.MEMBER = MEMBER;
-exports.ADMIN = ADMIN;
-exports.MEMTYPE = [MEMBER, ADMIN];
-
 const CTMALE = 0;   //Cloth Type Male
 const CTFEMALE = 1; //Cloth Type FEMALE
 const CTKIDB = 2;   //Cloth Type Kid Boy

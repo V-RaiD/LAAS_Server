@@ -56,7 +56,7 @@ var UserSchema = new Schema({
     }
 }, {
     toJSON: {
-        tranform: function (docM, retJ, option) {
+        transform: function (docM, retJ, option) {
             delete retJ.__v;
             if (retJ.created)
                 retJ.created = new Date(retJ.created).getTime();
