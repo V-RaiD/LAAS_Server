@@ -51,7 +51,7 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/w1/item' -X POST -H 'Content-Type:application/json' -d '{"iName":"<name>","clothType":<0/1/2/3>,"wcost":{"classic":<val>,"super":<val>,"ultra":<val>},"icost":<val>,"dcost":<val>}' -H 'Authorization: bearer <authToken>'
+    curl -i 'http://localhost:9135/w1/item' -X POST -H 'Content-Type:application/json' -d '{"iName":"<name>","clothType":<0/1/2/3>,"wcost":{"classic":<val>,"super":<val>,"ultra":<val>},"icost":<val>,"dcost":<val>,"bulkFactor":<val>}' -H 'Authorization: bearer <authToken>'
   * Data Structure (required)
     {
       "iName" : "<name>",
@@ -106,7 +106,7 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/w1/itemlist/<type>' -X GET -H 'Authorization: bearer <authToken>'
+    curl -i 'http://localhost:9135/w1/itemlist?type=<type>' -X GET -H 'Authorization: bearer <authToken>'
   * Data Structure
     <type> :
     all : 4
@@ -116,4 +116,68 @@
     kid girl : 3
   * Output
     [{<item>}]
+  ```
+
+* Post Transaction
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/order' -X POST -H 'Content-Type:application/json' -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {<transactio object with _id and empty order array>}
+  ```
+
+* Put Order
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/order/:tid' -X PUT -H 'Content-Type:application/json' -d '{"item":"<itemId>","tos":<constants.TOS>, "tow":<constants.TOW>,"quantity":<val>,"status":null,"cost":null,"orderType":<constants.OTYPE>,"sagent":null,"delvagent":null}' -H 'Authorization: bearer <authToken>'
+  * Data Structure
+    {
+      "item" : <item id>,
+      "tos" : <type of service - wash : 0/iron : 1/wash and iron : 2/ dry clean : 3>,
+      "tow" : <type of wash - classic : 0/super : 1/ultra : 2>,
+      "quantity" : <number in units - kg in common and item count in bulk and selective>,
+      "status" : null,
+      "cost" : null,
+      "orderType" : <order type - selective : 0/common : 1/bulk : 2>,
+      "sagent" : null,
+      "delvagent" : null
+    }
+  * Output
+    {<transaction object with one object(new) is order array>}
+  ```
+
+* Delete Order
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/order/:tid/:id' -X DELETE -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {message : Deleted the order, Status : 200}
+  ```
+
+* Delete Transaction
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/order/:tid' -X DELETE -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * {message : Deleted the transaction, Status : 200}
+  ```
+
+* Update Order
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/order/:tid/:id' -X PUT -H 'Content-Type:application/json' -d '{<update Order structure with _id>}' -H 'Authorization: bearer <authToken>'
+  * Data Structure
+    {
+      <order structure with changes>,
+      "_id" : "<_id of order>"
+    }
+  * Output
+    {"_id":"transaction id", "order":[{<only the update order document>}]}
   ```

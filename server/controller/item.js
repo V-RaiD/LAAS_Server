@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 let Item = mongoose.model('Item'), wbshared = require('wb-shared'), log = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), constants = wbshared.utils.constants;
 exports.initSecured = (app) => {
-    app.get('/w1/itemlist/:type', getListItem);
+    app.get('/w1/item', getListItem);
     app.get('/w1/item/:id', getItem);
     app.get('/w1/itemquery', getQueryList);
 };
@@ -10,6 +10,7 @@ exports.initAdmin = (app) => {
     app.post('/w1/item', addItem);
     app.put('/w1/item', updateItem);
     app.del('/w1/item/:id', deleteItem);
+    app.put('/w1/discount');
 };
 function* getQueryList(next) {
     try {
@@ -46,7 +47,7 @@ function* getItem(next) {
 function* getListItem(next) {
     try {
         let wbuser = this.document.wbuser;
-        let typeList = this.params.type;
+        let typeList = this.query.type;
         log.info("Get List Item type : ", typeList);
         let itemList;
         if (typeList.toString() == 4) {
@@ -68,6 +69,7 @@ function* getListItem(next) {
 function* addItem(next) {
     try {
         let body = this.request.fields;
+        log.info('Body recieved in add item : ', body);
         let itemStruct = yield new Item(body).save();
         log.info("Add Item : ", itemStruct);
         this.body = itemStruct;

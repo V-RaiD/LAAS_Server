@@ -1,6 +1,6 @@
 'use strict'
 import mongoose = require('mongoose');
-let Schema = mongoose.Schema, log = require('../utils/logger').root.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), bcrypt = require('..').utils.crypter, co = require('co'), Constants = require('../utils/constants.js');
+let Schema = mongoose.Schema, log = require('../utils/logger').root.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), bcrypt = require('..').utils.crypter, co = require('co'), constants = require('../utils/constants.js');
 
 var ItemSchema = new Schema(
   {
@@ -10,7 +10,7 @@ var ItemSchema = new Schema(
     },
     clothType: {
       type: Number,
-      enum: Constants.CLOTHTYPE
+      enum: constants.CLOTHTYPE
     },
     wcost: {//wash
       classic: {
@@ -33,6 +33,10 @@ var ItemSchema = new Schema(
     dcost: {//dryclean
       type: Number,
       default: 20
+    },
+    bulkFactor: {
+      type: Number,
+      default: 10
     },
     created: {
       type: Date,
