@@ -1,4 +1,4 @@
-# API List
+# Washbay API List
 
 ## Curl Request, Data structure, Output
 
@@ -8,7 +8,7 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/w1/verification/signup' -X POST -d '{"name":{"fname":"Amitesh ","lname":"Rai"}, "password":"washbay@123","email":"amitesh.rai@washbay.in","phone":"0000000000","utype":null}' -H 'Content-Type:application/json'
+    curl -i 'http://localhost:9135/w1/verification/signup' -X POST -d '{"name":{"fname":"Amitesh","lname":"Rai"}, "password":"washbay@123","email":"amitesh.rai@washbay.in","phone":"0000000000","utype":null}' -H 'Content-Type:application/json'
   * Data structure (required)
     {
       'name' : {'fname':'<first-name>'},
@@ -124,10 +124,39 @@
 
   ```
   * Curl
-    curl -i 'http://localhost:9135/w1/order' -X POST -H 'Content-Type:application/json' -H 'Authorization: bearer <authToken>'
+    curl -i 'http://localhost:9135/w1/transaction' -X POST -H 'Content-Type:application/json' -H 'Authorization: bearer <authToken>'
   * Data Structure
   * Output
-    {<transactio object with _id and empty order array>}
+    {<transaction object with _id and empty order array>}
+  ```
+
+* Get Transaction
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/transaction/:tid' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {<transaction object with _id>}
+  ```
+
+* List Transaction (history)
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/transaction' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    [{<list transaction object with _id>}]
+  ```
+
+* Delete Transaction
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/transaction/:tid' -X DELETE -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {message : Deleted transaction, Status : 200}
   ```
 
 * Put Order
@@ -151,6 +180,16 @@
     {<transaction object with one object(new) is order array>}
   ```
 
+* Get Order
+
+  ```
+  * Curl
+    curl -i 'http://localhost:9135/w1/:tid/:id' -X GET -H 'Authorization: bearer <authToken>'
+  * Data Structure
+  * Output
+    {<transaction object with just _id and order array with one object as specified by :id>}
+  ```
+
 * Delete Order
 
   ```
@@ -159,15 +198,6 @@
   * Data Structure
   * Output
     {message : Deleted the order, Status : 200}
-  ```
-
-* Delete Transaction
-
-  ```
-  * Curl
-    curl -i 'http://localhost:9135/w1/order/:tid' -X DELETE -H 'Authorization: bearer <authToken>'
-  * Data Structure
-  * {message : Deleted the transaction, Status : 200}
   ```
 
 * Update Order
@@ -183,3 +213,5 @@
   * Output
     {"_id":"transaction id", "order":[{<only the update order document>}]}
   ```
+
+### Billing Module

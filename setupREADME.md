@@ -48,7 +48,7 @@
 - Using nohup
 
   ```
-  nohup node washbayserver.js >/dev/null 2>&1 & # '/dev/null' acts as a sink or a black hole for all the screen outputs
+  nohup node washbayServer.js >/dev/null 2>&1 & # '/dev/null' acts as a sink or a black hole for all the screen outputs
   ```
 
 - Using init script (as a service)

@@ -2,11 +2,14 @@
 const mongoose = require('mongoose');
 let Item = mongoose.model('Item'), wbshared = require('wb-shared'), log = wbshared.logger.child({ 'module': __filename.substring(__dirname.length + 1, __filename.length - 3) }), constants = wbshared.utils.constants, User = mongoose.model('User'), Transaction = mongoose.model('Transaction');
 exports.initSecured = (app) => {
-    app.post('/w1/order', addTransaction);
+    app.post('/w1/transaction', addTransaction);
+    app.get('/w1/transaction/:tid', getTransaction);
+    app.get('/w1/transaction', getListTransaction);
+    app.del('/w1/transaction/:tid', deleteTransaction);
+    app.get('/w1/order/:tid/:id', getOrder);
     app.put('/w1/order/:tid', putOrder);
     app.del('/w1/order/:tid/:id', deleteOrder);
     app.put('/w1/order/:tid/:id', updateOrder);
-    app.del('/w1/order/:tid', deleteTransaction);
 };
 exports.initAdmin = (app) => {
 };
@@ -24,6 +27,33 @@ function* addTransaction(next) {
     catch (error) {
         log.error('Exception caught in Transaction add : ', error);
         this.body = "Error in processing Transaction add request";
+        this.status = 404;
+    }
+}
+function* getTransaction(next) {
+    try {
+        let wbuser = this.document.wbuser;
+        let tid = this.params.tid;
+        let transaction = yield Transaction.findOne({ _id: tid }).exec();
+        this.body = transaction;
+        this.status = 200;
+    }
+    catch (error) {
+        log.error('Exception caught in Transaction get : ', error);
+        this.body = "Error in processing Transaction get request";
+        this.status = 404;
+    }
+}
+function* getListTransaction(next) {
+    try {
+        let wbuser = this.document.wbuser;
+        let transactions = yield Transaction.findOne({ user: wbuser._id }).exec();
+        this.body = transactions;
+        this.status = 200;
+    }
+    catch (error) {
+        log.error('Exception caught in Transaction list get : ', error);
+        this.body = "Error in processing Transaction list get request";
         this.status = 404;
     }
 }
@@ -93,6 +123,21 @@ function* putOrder(next) {
         this.body = transaction;
         this.status = 200;
         yield next;
+    }
+    catch (error) {
+        log.error('Exception caught in Order put : ', error);
+        this.body = "Error in processing Order put request";
+        this.status = 404;
+    }
+}
+function* getOrder(next) {
+    try {
+        let wbuser = this.document.wbuser;
+        let tid = this.params.tid;
+        let id = this.params.id;
+        let order = yield Transaction.findOne({ _id: tid, "order._id": id }, { "order.$": 1 }).exec();
+        this.body = order;
+        this.status = 200;
     }
     catch (error) {
         log.error('Exception caught in Order put : ', error);
