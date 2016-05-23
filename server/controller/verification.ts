@@ -16,12 +16,29 @@ exports.initPub = function(app) {//w1 - washbay 1.0
 
 exports.initSecured = function(app) {
   app.get('/verification/hellos', printWashbayS);
+  app.get('/w1/verification', getType);
 };
+
+function* getType(next) {
+  try {
+    let wbuser = this.document.user;
+
+    delete wbuser.password;
+
+    this.body = wbuser;
+    this.status = 200;
+  } catch (error) {
+    log.error('Exception caught in get type : ', error);
+    this.body = "Error in processing type get Request";
+    this.status = 404;
+  }
+}
 
 function* signin(next) {
   try {
     let signInBody = this.request.fields;
     log.info('Sign In request recieved');
+    log.info('Body : ', signInBody);
     let userSearch = yield User.passwordChecker(signInBody.username, signInBody.password);
     if (userSearch.error) {
       throw new Error(userSearch.error);
