@@ -68,6 +68,7 @@ function* getListItem(next) {
 }
 function* addItem(next) {
     try {
+        wbuser = this.document.wbuser;
         let body = this.request.fields;
         log.info('Body recieved in add item : ', body);
         let itemStruct = yield new Item(body).save();
