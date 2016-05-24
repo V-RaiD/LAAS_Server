@@ -47,7 +47,7 @@ function* getTransaction(next) {
 function* getListTransaction(next) {
     try {
         let wbuser = this.document.wbuser;
-        let transactions = yield Transaction.findOne({ user: wbuser._id }).exec();
+        let transactions = yield Transaction.find({ user: wbuser._id }).exec();
         this.body = transactions;
         this.status = 200;
     }
